@@ -10,6 +10,10 @@ import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 @Service
 public class PotvrdaRecenzenta implements JavaDelegate {
 
@@ -22,7 +26,7 @@ public class PotvrdaRecenzenta implements JavaDelegate {
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
 
-        System.out.println("Usao u PotvrdaRecenzentaService");
+        System.out.println("Usao u PotvrdaRecenzenta");
 
         String username = (String) delegateExecution.getVariable("username");
         System.out.println("username: " + username);
@@ -31,10 +35,13 @@ public class PotvrdaRecenzenta implements JavaDelegate {
             Korisnik pronadjen = korisnikService.findOneByUsername(username);
 
             Role role = roleService.findOneByName("ROLE_RECENZENT");
-            pronadjen.getRoles().add(role);
+//            pronadjen.getRoles().add(role);
+            List<Role> roles = new ArrayList<>();
+            roles.add(role);
+            pronadjen.setRoles(roles);
             pronadjen.setRecenzent(Recenzent.ODOBREN);
 
-            korisnikService.save(pronadjen);
+            pronadjen = korisnikService.save(pronadjen);
 
             System.out.println("Korisnik uspesno potvrdjen kao recenzent");
         }catch(NullPointerException e){

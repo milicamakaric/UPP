@@ -5,7 +5,7 @@ import com.example.naucnacentrala.model.*;
 import com.example.naucnacentrala.service.KorisnikService;
 import com.example.naucnacentrala.service.NaucnaOblastService;
 import com.example.naucnacentrala.service.RoleService;
-import com.example.naucnacentrala.service.UlogaService;
+import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -25,19 +23,21 @@ public class ProveraPodataka implements JavaDelegate {
     private KorisnikService korisnikService;
 
     @Autowired
-    private UlogaService ulogaService;
-
-    @Autowired
     private NaucnaOblastService naucnaOblastService;
-
-    @Autowired
-    public JavaMailSender emailSender;
+//
+//    @Autowired
+//    public JavaMailSender emailSender;
 
     @Autowired
     private RoleService roleService;
 
+    @Autowired
+    private RuntimeService runtimeService;
+
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
+
+        System.out.println("usao u Provera podataka");
 
         List<FormSubmissionDto> registration = (List<FormSubmissionDto>) delegateExecution.getVariable("registration");
         System.out.println("id procesa: " + delegateExecution.getProcessInstanceId());
@@ -94,26 +94,7 @@ public class ProveraPodataka implements JavaDelegate {
         korisnik.setAktiviran(false);
         korisnik = korisnikService.save(korisnik);
 
-        System.out.println("Sending Email to: " + mail + "...");
-
-        try {
-
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(mail);
-            message.setSubject("Potvrda registracije");
-
-            String confirmationUrl
-                    =  "http://localhost:4200/activation/" + korisnik.getId() + "/" + delegateExecution.getProcessInstanceId();
-            message.setText("Postovani/a, " + korisnik.getIme() + " " + korisnik.getPrezime() + "\n\n" +
-                    "Da biste potvrdili Vasu registraciju, kliknite na link ispod.\n "
-                    + confirmationUrl + "\n\n Srdacno,\n Naucna centrala");
-            emailSender.send(message);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        System.out.println("Done");
+        System.out.println("izasao iz ProveraPodataka");
 
     }
 }

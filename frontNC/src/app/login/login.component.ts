@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit {
   
     this.authService.login(userDTO).subscribe(
       (success) => {
-        alert("succes");
+        // alert("Uspesno ste se ulogovali.");
         this.authService.getUser().subscribe(
           (user: any) => {
             if(user.role == "ADMIN"){
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['']);
       }, 
       (error) => {
-        alert(error);
+        alert("Podaci koje ste uneli nisu ispravni, pokusajte ponovo.");
       }
     )
   }

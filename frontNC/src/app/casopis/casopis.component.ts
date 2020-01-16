@@ -51,7 +51,7 @@ export class CasopisComponent implements OnInit {
 
   createFormControls(){
     this.naziv = new FormControl('', Validators.required);
-    this.ISSN_broj = new FormControl('', Validators.required);
+    this.ISSN_broj = new FormControl('', [Validators.required, Validators.minLength(9), Validators.maxLength(9), Validators.pattern('[0-9]{4}-[0-9]{4}')]);
     this.naplata_clanarine = new FormControl('', Validators.required);
     this.naucna_oblast = new FormControl('', Validators.required);
     

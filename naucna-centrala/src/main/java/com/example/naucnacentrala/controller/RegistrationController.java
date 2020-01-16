@@ -2,15 +2,10 @@ package com.example.naucnacentrala.controller;
 
 import com.example.naucnacentrala.dto.FormFieldsDto;
 import com.example.naucnacentrala.dto.FormSubmissionDto;
-import com.example.naucnacentrala.dto.TaskDto;
 import com.example.naucnacentrala.model.Korisnik;
-import com.example.naucnacentrala.model.NaucnaOblast;
-import com.example.naucnacentrala.model.Uloga;
+import com.example.naucnacentrala.model.Recenzent;
 import com.example.naucnacentrala.service.KorisnikService;
-import com.example.naucnacentrala.service.NaucnaOblastService;
-import com.example.naucnacentrala.service.UlogaService;
 import com.example.naucnacentrala.utils.Utils;
-import org.apache.ibatis.jdbc.Null;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.form.FormField;
 import org.camunda.bpm.engine.form.TaskFormData;
@@ -20,15 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -137,7 +128,18 @@ public class RegistrationController {
 
         System.out.println("id_user: " + id_user + "; id_process: " + id_process);
         runtimeService.setVariable(id_process, "id_user", id_user);
-        runtimeService.setVariable(id_process, "potvrdjeno", true);
+
+        String hashedValue = (String) runtimeService.getVariable(id_process, "hashVrednost");
+        boolean isValid = BCrypt.checkpw(korisnikService.findOneById(id_user).getUsername(), hashedValue);
+
+        if(!isValid){
+            System.out.println("Nije validan hash prilikom verifikacije mejla");
+        }else{
+
+            System.out.println("Validan je hash prilikom verifikacije mejla");
+            runtimeService.setVariable(id_process, "potvrdjeno", true);
+        }
+
 
         return new ResponseEntity<>(HttpStatus.OK);
 
@@ -161,7 +163,6 @@ public class RegistrationController {
                 List<FormField> properties = taskFormData.getFormFields();
 
                 formFieldsDto.setFormFields(properties);
-
                 formFieldsDtos.add(formFieldsDto);
             }
         }
@@ -191,6 +192,11 @@ public class RegistrationController {
 
         Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         String processInstanceId = task.getProcessInstanceId();
+
+        String username = (String) runtimeService.getVariable(processInstanceId, "username");
+        Korisnik pronadjen = korisnikService.findOneByUsername(username);
+        pronadjen.setRecenzent(Recenzent.ODBIJEN);
+        korisnikService.save(pronadjen);
 
         runtimeService.setVariable(processInstanceId, "potvrda", "ne");
         taskService.complete(taskId);

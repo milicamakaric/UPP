@@ -206,15 +206,17 @@ public class CasopisController {
 
         List<FormFieldsDto> formFieldsDtos = new ArrayList<>();
         for(Task task: tasks){
-            FormFieldsDto formFieldsDto = new FormFieldsDto();
-            formFieldsDto.setTaskId(task.getId());
+            if(task.getName().contains("Ispravljanje")) {
+                FormFieldsDto formFieldsDto = new FormFieldsDto();
+                formFieldsDto.setTaskId(task.getId());
 
-            TaskFormData taskFormData = formService.getTaskFormData(task.getId());
-            List<FormField> properties = taskFormData.getFormFields();
+                TaskFormData taskFormData = formService.getTaskFormData(task.getId());
+                List<FormField> properties = taskFormData.getFormFields();
 
-            formFieldsDto.setFormFields(properties);
+                formFieldsDto.setFormFields(properties);
 
-            formFieldsDtos.add(formFieldsDto);
+                formFieldsDtos.add(formFieldsDto);
+            }
 
         }
 

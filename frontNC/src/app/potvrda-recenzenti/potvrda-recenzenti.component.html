@@ -5,7 +5,7 @@
 <div *ngIf="tasks.length != 0">
     <div class="container">
         <h3 >Potvrda recenzenata</h3>
-    </div><br><br>
+    </div><br>
 
     <div class="container" *ngFor="let task of tasks">
         <table>
@@ -13,6 +13,7 @@
                 <td>{{field.label}}</td>
                 <td>{{field.defaultValue}}</td>
             </tr>
+            <br>
             <tr>
                 <td>
                     <button class="btn btn-primary" (click)="prihvati(task.taskId)">Prihvati</button>&nbsp;&nbsp;&nbsp;

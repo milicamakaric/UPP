@@ -44,14 +44,11 @@ public class Korisnik implements UserDetails {
     @Column
     private Recenzent recenzent;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
-    private Uloga uloga;
-
     @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.EAGER)
     private Set<NaucnaOblast> naucneOblasti = new HashSet<NaucnaOblast>();
 
     @ManyToMany(cascade =  {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_roles",
+    @JoinTable(name = "korisnik_roles",
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     protected List<Role> roles = new ArrayList<>();
@@ -59,7 +56,7 @@ public class Korisnik implements UserDetails {
     public Korisnik() {
     }
 
-    public Korisnik(String ime, String prezime, String grad, String drzava, String titula, String email, String username, String password, Uloga uloga) {
+    public Korisnik(String ime, String prezime, String grad, String drzava, String titula, String email, String username, String password) {
         this.ime = ime;
         this.prezime = prezime;
         this.grad = grad;
@@ -68,7 +65,6 @@ public class Korisnik implements UserDetails {
         this.email = email;
         this.username = username;
         this.password = password;
-        this.uloga = uloga;
     }
 
     public Integer getId() {
@@ -152,14 +148,6 @@ public class Korisnik implements UserDetails {
     public Recenzent getRecenzent() { return recenzent; }
 
     public void setRecenzent(Recenzent recenzent) { this.recenzent = recenzent; }
-
-    public Uloga getUloga() {
-        return uloga;
-    }
-
-    public void setUloga(Uloga uloga) {
-        this.uloga = uloga;
-    }
 
     public Set<NaucnaOblast> getNaucneOblasti() {
         return naucneOblasti;

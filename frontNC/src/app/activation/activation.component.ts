@@ -30,6 +30,7 @@ export class ActivationComponent implements OnInit {
     this.registrationService.activateUser(o, this.id_process).subscribe(
       res => {
         console.log("res", res);
+        alert('Uspesno ste aktivirali nalog');
         window.location.href="";
     
       },

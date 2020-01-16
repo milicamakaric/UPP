@@ -23,7 +23,7 @@ export class JwtInterceptor implements HttpInterceptor {
                 let isExpired = this.helper.isTokenExpired(currentUser.accessToken);
 
             if(isExpired){
-                alert("Session is expired")
+                alert("Vasa sesija je istekla. Molimo Vas, ponovo se ulogujte.")
                 localStorage.removeItem('currentUser');
                 this.router.navigate(['/login']);
             }else{
