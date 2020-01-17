@@ -12,7 +12,7 @@
               <label for={{field.id}} class="col-sm-3 col-form-label">{{field.label}}</label>
               <div class="col-sm-9">
                   <input type="text" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.type.name=='string'" >
-                  <select name="field.id" *ngIf="field.type.name=='enum' && field.id=='naucna_oblast'" formControlName={{field.id}} class="form-control" multiple>
+                  <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='naucna_oblast'" formControlName={{field.id}} class="form-control" multiple>
                       <option *ngFor="let val of enumValuesNaucneOblasti" value={{val}}>
                         {{field.type.values[val]}}
                       </option>

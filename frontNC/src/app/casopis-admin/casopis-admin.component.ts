@@ -10,6 +10,9 @@ export class CasopisAdminComponent implements OnInit {
 
   private tasks = [];
   private controls = [];
+  private enumValuesNaucneOblasti = [];
+  private enumValuesUrednici = [];
+  private enumValuesRecenzenti = [];
 
   constructor(private casopisService: CasopisService) { }
 
@@ -21,6 +24,18 @@ export class CasopisAdminComponent implements OnInit {
       res => {
         console.log('res:', res);
         this.tasks = res;
+        this.tasks.forEach( (task) => {
+          task.formFields.forEach( (field) => {
+            if( field.type.name=='enum' && field.id=='naucna_oblast1'){
+              this.enumValuesNaucneOblasti = Object.keys(field.type.values);
+            }else if( field.type.name=='enum' && field.id=='urednici1'){
+              this.enumValuesUrednici = Object.keys(field.type.values);
+            }else if( field.type.name=='enum' && field.id=='recenzenti1'){
+              this.enumValuesRecenzenti = Object.keys(field.type.values);
+            }
+          });
+          
+        });
       },
       err => {
         console.log("Error occured");

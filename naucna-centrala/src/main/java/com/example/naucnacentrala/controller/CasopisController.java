@@ -113,6 +113,7 @@ public class CasopisController {
         for(FormField field : properties){
             if(field.getId().equals("urednici")){
                 EnumFormType enumType = (EnumFormType) field.getType();
+                enumType.getValues().clear();
                 for(Korisnik urednik: urednici){
                     enumType.getValues().put(urednik.getUsername(), urednik.getIme() + " " + urednik.getPrezime());
                 }
@@ -125,6 +126,7 @@ public class CasopisController {
         for(FormField field : properties){
             if(field.getId().equals("recenzenti")){
                 EnumFormType enumType = (EnumFormType) field.getType();
+                enumType.getValues().clear();
                 for(Korisnik recenzent: recenzenti){
                     enumType.getValues().put(recenzent.getUsername(), recenzent.getIme() + " " + recenzent.getPrezime());
                 }
@@ -161,7 +163,7 @@ public class CasopisController {
 
         List<FormFieldsDto> formFieldsDtos = new ArrayList<>();
         for(Task task: tasks){
-            if(task.getName().equals("Provera podataka casopisaa")) {
+            if(task.getName().equals("Proveraa podataka casopisaa")) {
                 FormFieldsDto formFieldsDto = new FormFieldsDto();
                 formFieldsDto.setTaskId(task.getId());
                 System.out.println("taskId:" + task.getId());
@@ -169,8 +171,50 @@ public class CasopisController {
                 TaskFormData taskFormData = formService.getTaskFormData(task.getId());
                 List<FormField> properties = taskFormData.getFormFields();
 
-                formFieldsDto.setFormFields(properties);
+                String processInstanceId = task.getProcessInstanceId();
+                Integer casopisId = (Integer) runtimeService.getVariable(processInstanceId, "casopisId");
+                Casopis casopis = casopisService.findOneById(casopisId);
+                List<NaucnaOblast> naucneOblasti = casopis.getNaucneOblasti();
+                System.out.println("casopisId: " + casopisId + "; naucne oblasti size: " + naucneOblasti.size());
 
+                for(FormField field : properties){
+                    if(field.getId().equals("naucna_oblast1")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(NaucnaOblast oblast: naucneOblasti){
+                            enumType.getValues().put(oblast.getNaziv(), oblast.getNaziv());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> urednici = casopis.getUrednici();
+                System.out.println("size urednici: " + urednici.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("urednici1")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik urednik: urednici){
+                            enumType.getValues().put(urednik.getUsername(), urednik.getIme() + " " + urednik.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> recenzenti = casopis.getRecenzenti();
+                System.out.println("size recenzenti: " + recenzenti.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("recenzenti1")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik recenzent: recenzenti){
+                            enumType.getValues().put(recenzent.getUsername(), recenzent.getIme() + " " + recenzent.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                formFieldsDto.setFormFields(properties);
                 formFieldsDtos.add(formFieldsDto);
             }
         }
@@ -206,15 +250,83 @@ public class CasopisController {
 
         List<FormFieldsDto> formFieldsDtos = new ArrayList<>();
         for(Task task: tasks){
-            if(task.getName().contains("Ispravljanje")) {
+            if(task.getName().contains("Ispravljanjee")) {
                 FormFieldsDto formFieldsDto = new FormFieldsDto();
                 formFieldsDto.setTaskId(task.getId());
 
                 TaskFormData taskFormData = formService.getTaskFormData(task.getId());
                 List<FormField> properties = taskFormData.getFormFields();
 
-                formFieldsDto.setFormFields(properties);
+                String processInstanceId = task.getProcessInstanceId();
+                Integer casopisId = (Integer) runtimeService.getVariable(processInstanceId, "casopisId");
+                Casopis casopis = casopisService.findOneById(casopisId);
+                List<NaucnaOblast> naucneOblasti = casopis.getNaucneOblasti();
+                System.out.println("casopisId: " + casopisId + "; naucne oblasti size: " + naucneOblasti.size());
 
+                for(FormField field : properties){
+                    if(field.getId().equals("stare_naucne_oblasti")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(NaucnaOblast oblast: naucneOblasti){
+                            enumType.getValues().put(oblast.getNaziv(), oblast.getNaziv());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> urednici = casopis.getUrednici();
+                System.out.println("size urednici: " + urednici.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("stari_urednici")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik urednik: urednici){
+                            enumType.getValues().put(urednik.getUsername(), urednik.getIme() + " " + urednik.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> recenzenti = casopis.getRecenzenti();
+                System.out.println("size recenzenti: " + recenzenti.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("stari_recenzenti")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik recenzent: recenzenti){
+                            enumType.getValues().put(recenzent.getUsername(), recenzent.getIme() + " " + recenzent.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> uredniciNaucneOblasti = korisnikService.findAllByNaucneOblasti(naucneOblasti, "urednik");
+                System.out.println("size uredniciNaucneOblasti: " + uredniciNaucneOblasti.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("urednici_novi")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik urednik: uredniciNaucneOblasti){
+                            enumType.getValues().put(urednik.getUsername(), urednik.getIme() + " " + urednik.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                List<Korisnik> recenzentiNaucneOblasti = korisnikService.findAllByNaucneOblasti(naucneOblasti, "recenzent");
+                System.out.println("size recenzentiNaucneOblasti: " + recenzentiNaucneOblasti.size());
+                for(FormField field : properties){
+                    if(field.getId().equals("recenzenti_novi")){
+                        EnumFormType enumType = (EnumFormType) field.getType();
+                        enumType.getValues().clear();
+                        for(Korisnik recenzent: recenzentiNaucneOblasti){
+                            enumType.getValues().put(recenzent.getUsername(), recenzent.getIme() + " " + recenzent.getPrezime());
+                        }
+                        break;
+                    }
+                }
+
+                formFieldsDto.setFormFields(properties);
                 formFieldsDtos.add(formFieldsDto);
             }
 
@@ -244,6 +356,18 @@ public class CasopisController {
             }
             if(dto.getFieldId().equals("stara_naplata_clanarine") || dto.getFieldId().equals("naplata_clanarine")){
                 runtimeService.setVariable(processInstanceId, "ispravkaNaplata", ispravkaDto);
+                break;
+            }
+            if(dto.getFieldId().equals("stare_naucne_oblasti") || dto.getFieldId().equals("naucna_oblast")){
+                runtimeService.setVariable(processInstanceId, "ispravkaNaucneOblasti", ispravkaDto);
+                break;
+            }
+            if(dto.getFieldId().equals("stari_urednici") || dto.getFieldId().equals("urednici_novi")){
+                runtimeService.setVariable(processInstanceId, "ispravkaUrednici", ispravkaDto);
+                break;
+            }
+            if(dto.getFieldId().equals("stari_recenzenti") || dto.getFieldId().equals("recenzenti_novi")){
+                runtimeService.setVariable(processInstanceId, "ispravkaRecenzenti", ispravkaDto);
                 break;
             }
         }

@@ -13,12 +13,45 @@
                 <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
                 <div class="col-sm-5">
                     <input type="text" name={{field.id}} class="form-control" *ngIf="field.type.name=='string' && field.defaultValue!=null" [ngModel]=field.defaultValue readonly>
-                    <input type="text" name={{field.id}} class="form-control" *ngIf="field.type.name=='string' && field.defaultValue==null" ngModel>
-                    <select name={{field.id}} *ngIf="field.type.name=='enum'" class="form-control" ngModel>
-                        <option *ngFor="let val of enumValues" value={{val}}>
+                    <input type="text" name={{field.id}} class="form-control" *ngIf="field.type.name=='string' && field.defaultValue==null" ngModel required>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='naplata_clanarine'" class="form-control" ngModel required>
+                        <option *ngFor="let val of enumValuesNaplataClanarine" value={{val}}>
                           {{field.type.values[val]}}
                         </option>
                     </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='stare_naucne_oblasti'" class="form-control" ngModel multiple readonly>
+                        <option *ngFor="let val of enumValuesStareNaucneOblasti" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='naucna_oblast'" class="form-control" ngModel multiple required>
+                        <option *ngFor="let val of enumValuesNaucneOblasti" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='stari_urednici'" class="form-control" ngModel multiple readonly>
+                        <option *ngFor="let val of enumValuesStariUrednici" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='urednici_novi'" class="form-control" ngModel multiple>
+                        <option *ngFor="let val of enumValuesUrednici" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='stari_recenzenti'" class="form-control" ngModel multiple readonly>
+                        <option *ngFor="let val of enumValuesStariRecenzenti" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='recenzenti_novi'" class="form-control" ngModel multiple required>
+                        <option *ngFor="let val of enumValuesRecenzenti" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <span>
+                        <span *ngIf="field.id=='recenzenti_novi' && errorRecenzenti" style="color: red;">Morate odabrati minimalno dva recenzenta.</span>
+                    </span>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary" (click)="onSubmitForm(f.value, f, task.taskId)">Potvrdi</button>
