@@ -19,6 +19,7 @@ export class IspravkaComponent implements OnInit {
   private enumValuesStariRecenzenti = [];
   private enumValuesRecenzenti = [];
   private errorRecenzenti = false;
+  private error = false;
 
   constructor(private casopisService: CasopisService) { }
 
@@ -62,6 +63,7 @@ export class IspravkaComponent implements OnInit {
 
     console.log('taskId: ' + taskId);
     this.errorRecenzenti = false;
+    this.error = false;
 
     let dto = Array();
     this.controls = form.controls;
@@ -72,10 +74,14 @@ export class IspravkaComponent implements OnInit {
         console.log('odabrano manje od 2 recenzenta');
         this.errorRecenzenti = true;
       }
+      if((control == 'naziv' && this.controls[control].value=='') || (control == 'ISSN_broj' && this.controls[control].value=='') || (control == 'naplata_clanarine' && this.controls[control].value=='') || (control == 'naucna_oblast' && this.controls[control].value=='') || (control == 'recenzenti_novi' && this.controls[control].value=='')){
+        console.log('nije popunjeno');
+        this.error = true;
+      }
     
     }
 
-    if(this.errorRecenzenti == false){
+    if(this.errorRecenzenti == false && this.error == false){
      
       for(var control in this.controls){
         if(control != 'naucna_oblast' && control != 'urednici_novi' && control != 'recenzenti_novi'){

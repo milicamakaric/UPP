@@ -75,7 +75,7 @@
             <bpmn:incoming>SequenceFlow_1ez66hf</bpmn:incoming>
             <bpmn:outgoing>SequenceFlow_11j0ffq</bpmn:outgoing>
         </bpmn:userTask>
-        <bpmn:userTask id="Task_ispravka_naziva" name="Ispravljanjee naziva">
+        <bpmn:userTask id="Task_ispravka_naziva" name="Ispravljaanjee naziva">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stari_naziv" label="Stari naziv:" type="string" defaultValue="${naziv}" />
@@ -100,7 +100,7 @@
             <bpmn:incoming>SequenceFlow_16uj5vz</bpmn:incoming>
             <bpmn:outgoing>SequenceFlow_0zji6um</bpmn:outgoing>
         </bpmn:serviceTask>
-        <bpmn:userTask id="Task_ispravka_naplacivanja" name="Ispravljanjee naplacivanja">
+        <bpmn:userTask id="Task_ispravka_naplacivanja" name="Ispravljaanjee naplacivanja">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stara_naplata_clanarine" label="Stari tp naplacivanja:" type="string" defaultValue="${naplata_clanarine}" />
@@ -143,7 +143,7 @@
             <bpmn:incoming>SequenceFlow_1vy2a3e</bpmn:incoming>
         </bpmn:endEvent>
         <bpmn:sequenceFlow id="SequenceFlow_1vy2a3e" sourceRef="Task_aktivacija_casopisa" targetRef="EndEvent_1d70h2x" />
-        <bpmn:userTask id="Task_ispravka_ISSN" name="Ispravljanjee ISSN">
+        <bpmn:userTask id="Task_ispravka_ISSN" name="Ispravljaanjee ISSN">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stari_ISSN_broj" label="Stari ISSN broj:" type="string" defaultValue="${ISSN_broj}" />
@@ -203,7 +203,7 @@
             <bpmn:outgoing>SequenceFlow_048h82v</bpmn:outgoing>
         </bpmn:serviceTask>
         <bpmn:sequenceFlow id="SequenceFlow_048h82v" sourceRef="ServiceTask_0hm6dxq" targetRef="ExclusiveGateway_18edou0" />
-        <bpmn:userTask id="Task_ispravka_naucnih_oblasti" name="Ispravljanjee naucnih oblasti">
+        <bpmn:userTask id="Task_ispravka_naucnih_oblasti" name="Ispravljaanjee naucnih oblasti">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stare_naucne_oblasti" label="Stare naucne oblasti:" type="enum" />
@@ -228,15 +228,11 @@
             <bpmn:incoming>SequenceFlow_05fk5e9</bpmn:incoming>
             <bpmn:outgoing>SequenceFlow_0cvoik4</bpmn:outgoing>
         </bpmn:serviceTask>
-        <bpmn:userTask id="Task_ispravka_urednika" name="Ispravljanjee urednika">
+        <bpmn:userTask id="Task_ispravka_urednika" name="Ispravljaanjee urednika">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stari_urednici" label="Stari urednici:" type="enum" />
-                    <camunda:formField id="urednici_novi" label="Novi urednici:" type="enum">
-                        <camunda:validation>
-                            <camunda:constraint name="required" />
-                        </camunda:validation>
-                    </camunda:formField>
+                    <camunda:formField id="urednici_novi" label="Novi urednici:" type="enum" />
                 </camunda:formData>
                 <camunda:taskListener class="com.example.naucnacentrala.handler.PostavljanjeAssignee" event="create" />
             </bpmn:extensionElements>
@@ -247,7 +243,7 @@
             <bpmn:incoming>SequenceFlow_08lxzjp</bpmn:incoming>
             <bpmn:outgoing>SequenceFlow_1ojfx5x</bpmn:outgoing>
         </bpmn:serviceTask>
-        <bpmn:userTask id="Task_ispravka_recenzenata" name="Ispravljanjee recenzenata">
+        <bpmn:userTask id="Task_ispravka_recenzenata" name="Ispravljaanjee recenzenata">
             <bpmn:extensionElements>
                 <camunda:formData>
                     <camunda:formField id="stari_recenzenti" label="Stari recenzenti:" type="enum" />

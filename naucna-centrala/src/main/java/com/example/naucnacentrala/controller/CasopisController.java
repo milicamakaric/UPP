@@ -250,7 +250,7 @@ public class CasopisController {
 
         List<FormFieldsDto> formFieldsDtos = new ArrayList<>();
         for(Task task: tasks){
-            if(task.getName().contains("Ispravljanjee")) {
+            if(task.getName().contains("Ispravljaanjee")) {
                 FormFieldsDto formFieldsDto = new FormFieldsDto();
                 formFieldsDto.setTaskId(task.getId());
 

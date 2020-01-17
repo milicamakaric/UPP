@@ -33,13 +33,21 @@ public class NoviUrednici implements JavaDelegate {
 
         List<Korisnik> noviUrednici = new ArrayList<>();
 
-        for(FormSubmissionDto dto: ispravkaDto){
-            if(dto.getFieldId().equals("urednici_novi")){
-                Korisnik urednik = korisnikService.findOneByUsername(dto.getFieldValue());
-                noviUrednici.add(urednik);
+        if(ispravkaDto != null) {
+
+            System.out.println("postoje podaci o novom uredniku");
+            for (FormSubmissionDto dto : ispravkaDto) {
+                if (dto.getFieldId().equals("urednici_novi")) {
+                    Korisnik urednik = korisnikService.findOneByUsername(dto.getFieldValue());
+                    if (urednik != null) {
+                        System.out.println("urednik novi: " + urednik.getUsername());
+                        noviUrednici.add(urednik);
+                    } else {
+                        System.out.println("urednik je null");
+                    }
+                }
             }
         }
-
         casopis.setUrednici(noviUrednici);
         casopis = casopisService.save(casopis);
 
