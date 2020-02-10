@@ -37,7 +37,16 @@ export class CasopisiComponent implements OnInit {
   kupiRad(casopisId, radId){
     console.log('radId: ' + radId);
 
-    window.location.href = '/odabir_placanja'.concat('/' + casopisId + '/' + radId);
+    this.radService.kupiRad(radId).subscribe(
+      res => {
+        alert('Uspesno ste kupili rad');
+        window.location.href='casopisi';
+      }, err => {
+        alert("Error");
+      }
+    );
+
+    // window.location.href = '/odabir_placanja'.concat('/' + casopisId + '/' + radId);
   }
 
   subscribe(casopisId){

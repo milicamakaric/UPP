@@ -62,6 +62,9 @@ public class RadController {
     @Autowired
     private NaucnaOblastService naucnaOblastService;
 
+    @Autowired
+    private KorisnikService korisnikService;
+
     @GetMapping(path = "/get", produces = "application/json")
     @PreAuthorize("hasAuthority('NOVI_RAD')")
     public @ResponseBody FormFieldsDto get() {
@@ -887,7 +890,7 @@ public class RadController {
     }
 
     @GetMapping(path = "/downloadRad/{radId}")
-    public @ResponseBody ResponseEntity downloadFile(@PathVariable Integer radId) {
+    public @ResponseBody ResponseEntity downloadRad(@PathVariable Integer radId) {
 
         Rad rad = radService.findOneById(radId);
 
@@ -895,6 +898,21 @@ public class RadController {
                 .contentType(MediaType.parseMediaType("application/pdf"))
                 .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""  + "rad.pdf\"")
                 .body(new ByteArrayResource(rad.getPdf()));
+    }
+
+    @GetMapping(path = "/kupiRad/{radId}")
+    public @ResponseBody ResponseEntity kupiRad(@PathVariable Integer radId, HttpServletRequest request) {
+
+        Rad rad = radService.findOneById(radId);
+
+        String username = Utils.getUsernameFromRequest(request, tokenUtils);
+        System.out.println("kupovina: " + username);
+
+        Korisnik kupac = korisnikService.findOneByUsername(username);
+        rad.getKorisniciPlatili().add(kupac);
+        rad = radService.save(rad);
+
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 

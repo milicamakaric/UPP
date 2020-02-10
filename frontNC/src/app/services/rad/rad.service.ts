@@ -140,5 +140,9 @@ export class RadService {
     return this.http.get(this.zuul.path + "rad/downloadRad/".concat(radId), httpOptions) as Observable<any>;
   }
 
+  kupiRad(radId) {
+    return this.http.get(this.zuul.path + "rad/kupiRad/".concat(radId)) as Observable<any>;
+  }
+
 
 }
