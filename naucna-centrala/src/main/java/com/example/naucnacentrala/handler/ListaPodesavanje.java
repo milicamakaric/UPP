@@ -24,9 +24,11 @@ public class ListaPodesavanje implements JavaDelegate {
         List<String> komentarAutoru = new ArrayList<>();
         List<String> preporuke = new ArrayList<>();
         List<String> komentarUredniku = new ArrayList<>();
+        odradiliRecenzenti = new ArrayList<>();
         delegateExecution.setVariable("komentarAutoru", komentarAutoru);
         delegateExecution.setVariable("preporuke", preporuke);
         delegateExecution.setVariable("komentarUredniku", komentarUredniku);
+        delegateExecution.setVariable("odradiliRecenzenti", odradiliRecenzenti);
 
         System.out.println("izasao iz ListaPodesavanje");
 
