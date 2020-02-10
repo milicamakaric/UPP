@@ -1,9 +1,10 @@
 package com.example.naucnacentrala.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class NaucnaOblast {
+public class NaucnaOblast implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -24,15 +24,9 @@ public class ProveraPodataka implements JavaDelegate {
 
     @Autowired
     private NaucnaOblastService naucnaOblastService;
-//
-//    @Autowired
-//    public JavaMailSender emailSender;
 
     @Autowired
     private RoleService roleService;
-
-    @Autowired
-    private RuntimeService runtimeService;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {

@@ -21,16 +21,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 
 @RestController
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping(value = "auth")
 public class AuthController {
 
@@ -55,8 +53,10 @@ public class AuthController {
         System.out.println("usao u metodu auth/login");
         final Authentication authentication = manager
                 .authenticate(new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword()));
+        System.out.println("ULOGOVAN:");
+        System.out.println(authentication.getName());
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
 //
 //        Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
 //                SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -104,6 +104,12 @@ public class AuthController {
                     break;
                 }else if(role.getName().equals("ROLE_RECENZENT")){
                     ui.setRole("RECENZENT");
+                    break;
+                }else if(role.getName().equals("ROLE_AUTOR")){
+                    ui.setRole("AUTOR");
+                    break;
+                }else if(role.getName().equals("ROLE_KORISNIK")){
+                    ui.setRole("KORISNIK");
                     break;
                 }
             }

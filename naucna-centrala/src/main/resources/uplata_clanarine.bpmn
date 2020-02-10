@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_0hclkmu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.4.1">
+  <bpmn:process id="Proces_uplate_clanarine" name="Uplata clanarine" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_06072u4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_06072u4" sourceRef="StartEvent_1" targetRef="Task_biranje_nacina_placanja" />
+    <bpmn:userTask id="Task_biranje_nacina_placanja" name="Biranje nacina placanja">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="nacin_placanja" label="Nacin placanja:" type="enum">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="iznos" label="Iznos placanja:" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+        </camunda:formData>
+        <camunda:executionListener class="com.example.naucnacentrala.handler.Provera" event="start" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_06072u4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_15utyha</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_15utyha" sourceRef="Task_biranje_nacina_placanja" targetRef="ExclusiveGateway_0j6dfsv" />
+    <bpmn:endEvent id="EndEvent_0x7awaq">
+      <bpmn:incoming>SequenceFlow_1txb6ta</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_0j6dfsv">
+      <bpmn:incoming>SequenceFlow_15utyha</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_04rpew6</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_016kfgh</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_05d1egy</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:exclusiveGateway id="ExclusiveGateway_10as36t">
+      <bpmn:incoming>SequenceFlow_16fbexu</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1vrzfwa</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1xgp5mi</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1txb6ta</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="SequenceFlow_1txb6ta" sourceRef="ExclusiveGateway_10as36t" targetRef="EndEvent_0x7awaq" />
+    <bpmn:sequenceFlow id="SequenceFlow_04rpew6" sourceRef="ExclusiveGateway_0j6dfsv" targetRef="Task_placanje_paypal">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${placanje==2}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_016kfgh" sourceRef="ExclusiveGateway_0j6dfsv" targetRef="Task_placanje_karticom">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${placanje==1}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_05d1egy" sourceRef="ExclusiveGateway_0j6dfsv" targetRef="Task_placanje_bitcoin">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${placanje==3}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Task_placanje_paypal" name="Placanje putem paypal-a" camunda:class="com.example.naucnacentrala.handler.Placanje">
+      <bpmn:incoming>SequenceFlow_04rpew6</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_16fbexu</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_16fbexu" sourceRef="Task_placanje_paypal" targetRef="ExclusiveGateway_10as36t" />
+    <bpmn:serviceTask id="Task_placanje_karticom" name="Placanje karticom" camunda:class="com.example.naucnacentrala.handler.Placanje">
+      <bpmn:incoming>SequenceFlow_016kfgh</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1vrzfwa</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1vrzfwa" sourceRef="Task_placanje_karticom" targetRef="ExclusiveGateway_10as36t" />
+    <bpmn:serviceTask id="Task_placanje_bitcoin" name="Placanje putem bitcoin-a" camunda:class="com.example.naucnacentrala.handler.Placanje">
+      <bpmn:incoming>SequenceFlow_05d1egy</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1xgp5mi</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1xgp5mi" sourceRef="Task_placanje_bitcoin" targetRef="ExclusiveGateway_10as36t" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Proces_uplate_clanarine">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="182" y="219" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_06072u4_di" bpmnElement="SequenceFlow_06072u4">
+        <di:waypoint x="218" y="237" />
+        <di:waypoint x="280" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_0z1znjd_di" bpmnElement="Task_biranje_nacina_placanja">
+        <dc:Bounds x="280" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_15utyha_di" bpmnElement="SequenceFlow_15utyha">
+        <di:waypoint x="380" y="237" />
+        <di:waypoint x="425" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_0x7awaq_di" bpmnElement="EndEvent_0x7awaq">
+        <dc:Bounds x="832" y="219" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_0j6dfsv_di" bpmnElement="ExclusiveGateway_0j6dfsv" isMarkerVisible="true">
+        <dc:Bounds x="425" y="212" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ExclusiveGateway_10as36t_di" bpmnElement="ExclusiveGateway_10as36t" isMarkerVisible="true">
+        <dc:Bounds x="705" y="212" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1txb6ta_di" bpmnElement="SequenceFlow_1txb6ta">
+        <di:waypoint x="755" y="237" />
+        <di:waypoint x="832" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_04rpew6_di" bpmnElement="SequenceFlow_04rpew6">
+        <di:waypoint x="475" y="237" />
+        <di:waypoint x="530" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_016kfgh_di" bpmnElement="SequenceFlow_016kfgh">
+        <di:waypoint x="450" y="212" />
+        <di:waypoint x="450" y="120" />
+        <di:waypoint x="530" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_05d1egy_di" bpmnElement="SequenceFlow_05d1egy">
+        <di:waypoint x="450" y="262" />
+        <di:waypoint x="450" y="350" />
+        <di:waypoint x="530" y="350" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_00tidax_di" bpmnElement="Task_placanje_paypal">
+        <dc:Bounds x="530" y="197" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_16fbexu_di" bpmnElement="SequenceFlow_16fbexu">
+        <di:waypoint x="630" y="237" />
+        <di:waypoint x="705" y="237" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0wjj3w0_di" bpmnElement="Task_placanje_karticom">
+        <dc:Bounds x="530" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1vrzfwa_di" bpmnElement="SequenceFlow_1vrzfwa">
+        <di:waypoint x="630" y="120" />
+        <di:waypoint x="730" y="120" />
+        <di:waypoint x="730" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_08oti55_di" bpmnElement="Task_placanje_bitcoin">
+        <dc:Bounds x="530" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1xgp5mi_di" bpmnElement="SequenceFlow_1xgp5mi">
+        <di:waypoint x="630" y="350" />
+        <di:waypoint x="730" y="350" />
+        <di:waypoint x="730" y="262" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

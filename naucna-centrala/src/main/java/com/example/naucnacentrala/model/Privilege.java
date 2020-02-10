@@ -3,10 +3,11 @@ package com.example.naucnacentrala.model;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-public class Privilege implements GrantedAuthority {
+public class Privilege implements GrantedAuthority, Serializable {
   
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

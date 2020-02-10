@@ -18,7 +18,11 @@ public class Casopis {
     private String issn;
 
     @Column
-    private String naplataClanarine;
+    private double cena;
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private NaplacujeClanarina naplataClanarine;
 
     @Column
     private Boolean aktiviran;
@@ -36,12 +40,22 @@ public class Casopis {
     @ManyToMany(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     private List<Korisnik> recenzenti = new ArrayList<>();
 
+    @OneToMany(mappedBy = "casopis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Rad> radovi = new ArrayList<>();
+
+    @OneToMany(mappedBy = "casopis", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Subscription> pretplate = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Korisnik> korisniciPlatili = new ArrayList<>();
+
     public Casopis() {
     }
 
-    public Casopis(String naziv, String issn, String naplataClanarine, Boolean aktiviran) {
+    public Casopis(String naziv, String issn, double cena, NaplacujeClanarina naplataClanarine, Boolean aktiviran) {
         this.naziv = naziv;
         this.issn = issn;
+        this.cena = cena;
         this.naplataClanarine = naplataClanarine;
         this.aktiviran = aktiviran;
     }
@@ -70,11 +84,15 @@ public class Casopis {
         this.issn = issn;
     }
 
-    public String getNaplataClanarine() {
+    public double getCena() { return cena; }
+
+    public void setCena(double cena) { this.cena = cena; }
+
+    public NaplacujeClanarina getNaplataClanarine() {
         return naplataClanarine;
     }
 
-    public void setNaplataClanarine(String naplataClanarine) {
+    public void setNaplataClanarine(NaplacujeClanarina naplataClanarine) {
         this.naplataClanarine = naplataClanarine;
     }
 
@@ -117,4 +135,27 @@ public class Casopis {
     public void setRecenzenti(List<Korisnik> recenzenti) {
         this.recenzenti = recenzenti;
     }
+
+    public List<Rad> getRadovi() {
+        return radovi;
+    }
+
+    public void setRadovi(List<Rad> radovi) {
+        this.radovi = radovi;
+    }
+
+    public List<Korisnik> getKorisniciPlatili() {
+        return korisniciPlatili;
+    }
+
+    public void setKorisniciPlatili(List<Korisnik> korisniciPlatili) { this.korisniciPlatili = korisniciPlatili; }
+
+    public List<Subscription> getPretplate() {
+        return pretplate;
+    }
+
+    public void setPretplate(List<Subscription> pretplate) {
+        this.pretplate = pretplate;
+    }
+
 }

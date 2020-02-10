@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RequestMapping("/casopis")
 public class CasopisController {
 
@@ -150,7 +151,9 @@ public class CasopisController {
 
         formService.submitTaskForm(taskId, map);
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        Integer casopisId = (Integer) runtimeService.getVariable(processInstanceId, "casopisId");
+
+        return new ResponseEntity<Integer>(casopisId, HttpStatus.OK);
     }
 
     @GetMapping(path = "/getTasks", produces = "application/json")
