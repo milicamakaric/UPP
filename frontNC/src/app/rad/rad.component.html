@@ -1,0 +1,35 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+</div>
+  
+<div class= "container">
+  <div>
+    <h3>Unos informacija o radu</h3><br>
+  </div>
+    <form [formGroup]="radForm" #f="ngForm">
+    
+        <div *ngFor="let field of formFields" class="form-group row">
+            <label for={{field.id}} class="col-sm-4 col-form-label">{{field.label}}</label>
+            <div class="col-sm-6">
+                <input type="file" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.id=='pdf'" accept="application/pdf" (change)="handleFileInput($event.target.files)">
+                <input type="text" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.type.name=='string' && field.id!='pdf'" >
+                <input type="number" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.type.name=='long'" min="1">
+                <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='naucna_oblast'" formControlName={{field.id}} class="form-control">
+                    <option *ngFor="let val of enumValues" value={{val}}>
+                      {{field.type.values[val]}}
+                    </option>
+                </select>
+                <span>
+                    <span *ngIf="radForm.get(field.id).hasError('required') && (radForm.get(field.id).dirty || radForm.get(field.id).touched)" style="color: red;">Ovo polje je obavezno.</span>
+                </span>
+            </div>
+        </div>
+      
+      <button [disabled]="radForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" (click)="onSubmitRadForm(f.value, f)">Dalje</button>
+      <br><br>
+    </form>
+
+</div>
+  
+  
+

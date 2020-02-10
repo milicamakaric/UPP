@@ -1,0 +1,28 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+</div>
+  
+<div class= "container">
+  <div>
+    <h3>Pregled pdf dokumenta</h3><br>
+  </div>
+
+    <div style="margin-top: 15px; margin-bottom: 20px;">
+        <button class="btn btn-primary" (click)="onPreuzmiRad()">Preuzmi rad</button>
+    </div>
+
+    <form #f="ngForm">
+        <div *ngFor="let field of formFields" class="form-group row">
+            <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
+            <div class="col-sm-7">
+                <input type="text" name={{field.id}} class="form-control" *ngIf="field.type.name=='string'" [ngModel]=field.defaultValue>
+                <input type="checkbox" name={{field.id}} class="form-control"  *ngIf="field.type.name=='boolean'" [ngModel]=field.defaultValue>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary" (click)="onSubmitForm(f.value, f)">Potvrdi</button>
+    </form><br><br>
+
+</div>
+  
+  
+

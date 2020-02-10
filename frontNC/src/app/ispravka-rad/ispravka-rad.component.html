@@ -1,0 +1,42 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+  </div>
+
+<div *ngIf="formFields.length != 0">
+    <div class="container">
+        <h3 >Ispravka rada</h3>
+    </div><br><br>
+
+    <div class="container">
+        <form #f="ngForm">
+            <div *ngFor="let field of formFields" class="form-group row">
+                <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
+                <div class="col-sm-5">
+                    <input type="text" name={{field.id}} class="form-control" *ngIf="field.type.name=='string' && field.id!='ispravka_prilog_PDF'" ngModel>
+                    <input type="file" name={{field.id}} class="form-control" *ngIf="field.type.name=='string' && field.id=='ispravka_prilog_PDF'" accept="application/pdf" (change)="handleFileInput($event.target.files)">
+                    <select name={{field.id}} *ngIf="field.type.name=='enum'" class="form-control" multiple readonly ngModel>
+                        <option *ngFor="let val of enumValues" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="onSubmitForm(f.value, f)">Potvrdi</button>
+        </form><br><br>
+    </div><br><br>
+</div>
+
+<div *ngIf="formFields.length == 0">
+    <div class="container">
+        <br><h4 >Trenutno nema radova za ispravku.</h4>
+    </div><br><br>
+</div>
+
+<div>
+    &nbsp;&nbsp;&nbsp;<button class="btn btn-primary" (click)="nazad()">Nazad</button>
+</div>
+
+
+
+
+

@@ -1,0 +1,33 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+</div>
+  
+<div class= "container">
+  <div>
+    <h3>Uplata clanarine</h3><br>
+  </div>
+    <form [formGroup]="placanjeForm" #f="ngForm">
+    
+        <div *ngFor="let field of formFields" class="form-group row">
+            <label for={{field.id}} class="col-sm-3 col-form-label">{{field.label}}</label>
+            <div class="col-sm-9">
+                <input type="text" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.type.name=='string'" >
+                <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='nacin_placanja'" formControlName={{field.id}} class="form-control">
+                    <option *ngFor="let val of enumValues" value={{val}}>
+                      {{field.type.values[val]}}
+                    </option>
+                </select>
+                <span>
+                    <span *ngIf="placanjeForm.get(field.id).hasError('required') && (placanjeForm.get(field.id).dirty || placanjeForm.get(field.id).touched)" style="color: red;">Ovo polje je obavezno.</span>
+                </span>
+            </div>
+        </div>
+      
+      <button [disabled]="placanjeForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" (click)="onSubmitPlacanjeForm(f.value, f)">Dalje</button>
+      <br><br>
+    </form>
+
+</div>
+  
+  
+

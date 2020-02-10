@@ -1,0 +1,56 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+  </div>
+
+<div *ngIf="formFields.length != 0">
+    <div class="container">
+        <h3 >Analiza recenzija</h3>
+    </div><br><br>
+
+    <div class="container">
+        <form #f="ngForm">
+            <div *ngFor="let field of formFields" class="form-group row">
+                <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
+                <div class="col-sm-5">
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='komentar_autoru_analiza'" class="form-control" multiple readonly>
+                        <option *ngFor="let val of enumValuesKomentarAutoru" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='komentar_uredniku_analiza'" class="form-control" multiple readonly>
+                        <option *ngFor="let val of enumValuesKomentarUredniku" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='preporuka_analiza'" class="form-control" multiple readonly>
+                        <option *ngFor="let val of enumValuesPreporuka" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='odluka'" class="form-control" [ngModel]=field.defaultValue>
+                        <option *ngFor="let val of enumValuesOdluka" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary" (click)="onSubmitForm(f.value, f)">Potvrdi</button>
+        </form><br><br>
+    </div><br><br>
+</div>
+
+<div *ngIf="formFields.length == 0">
+    <div class="container">
+        <br><h4 >Trenutno nema taskova za analiziranje recenzija.</h4>
+    </div><br><br>
+</div>
+
+<div>
+    &nbsp;&nbsp;&nbsp;<button class="btn btn-primary" (click)="nazad()">Nazad</button>
+</div>
+
+
+
+
+
+

@@ -13,6 +13,7 @@ export class MainPageComponent implements OnInit {
   isLoggedIn: boolean = false;
   isUrednik: boolean = false;
   isRecenzent: boolean = false;
+  isAutor: boolean = false;
 
   constructor(private authService: AuthService) { }
 
@@ -32,6 +33,9 @@ export class MainPageComponent implements OnInit {
           }else if(user.role  === 'RECENZENT'){
             console.log('RECENZENT');
             this.isRecenzent = true;
+          }else if(user.role  === 'AUTOR'){
+            console.log('AUTOR');
+            this.isAutor = true;
           }
         }
       )
@@ -46,6 +50,7 @@ export class MainPageComponent implements OnInit {
     this.isAdmin = false;
     this.isUrednik = false;
     this.isRecenzent = false;
+    this.isAutor = false;
   }
 
 

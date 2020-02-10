@@ -1,0 +1,36 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+</div>
+  
+<div class= "container">
+  <div>
+    <h3>Novi rad</h3><br>
+  </div>
+    <form [formGroup]="radCasopisForm" #f="ngForm">
+    
+        <div *ngFor="let field of formFields" class="form-group row">
+            <label for={{field.id}} class="col-sm-3 col-form-label">{{field.label}}</label>
+            <div class="col-sm-9">
+                <input type="text" formControlName={{field.id}} class="form-control" id={{field.id}} *ngIf="field.type.name=='string'" >
+                <select name={{field.id}} *ngIf="field.type.name=='enum' && field.id=='izabrani_casopis'" formControlName={{field.id}} class="form-control">
+                    <option *ngFor="let val of enumValues" value={{val}}>
+                      {{field.type.values[val]}}
+                    </option>
+                </select>
+                <span>
+                    <span *ngIf="radCasopisForm.get(field.id).hasError('required') && (radCasopisForm.get(field.id).dirty || radCasopisForm.get(field.id).touched)" style="color: red;">Ovo polje je obavezno.</span>
+                </span>
+            </div>
+        </div>
+      
+      <button [disabled]="radCasopisForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" (click)="onSubmitRadCasopisForm(f.value, f)">Dalje</button>
+      <br><br>
+    </form>
+
+</div>
+
+<div>
+  &nbsp;&nbsp;&nbsp;<button class="btn btn-primary" (click)="nazad()">Nazad</button>
+</div>
+  
+  

@@ -1,0 +1,41 @@
+<div style="color:cornflowerblue; text-align: center;">
+    <h2>Naucna centrala</h2>
+</div>
+
+<div *ngIf="formFields.length != 0">
+    <div class="container">
+        <h3 >Izbor recenzenata</h3>
+    </div><br><br>
+
+    <div class="container">
+        <form [formGroup]="recenzentiForm" #f="ngForm">
+
+            <div *ngFor="let field of formFields" class="form-group row">
+                <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
+                <div class="col-sm-5">
+                    <select name={{field.id}} *ngIf="field.type.name=='enum'" formControlName={{field.id}} class="form-control" multiple>
+                        <option *ngFor="let val of enumValues" value={{val}}>
+                          {{field.type.values[val]}}
+                        </option>
+                    </select>
+                    <span>
+                        <span *ngIf="field.id=='select_box1' && error" style="color: red;">Morate odabrati minimalno dva recenzenta.</span>
+                    </span>
+                </div>
+            </div>
+          
+          <button [disabled]="recenzentiForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" (click)="onSubmitRecenzentiForm(f.value, f)">Potvrdi</button>
+          <br><br>
+        </form><br><br>
+    </div><br><br>
+</div>
+
+<div>
+    &nbsp;&nbsp;&nbsp;<button class="btn btn-primary" (click)="nazad()">Nazad</button>
+</div>
+
+
+
+
+
+

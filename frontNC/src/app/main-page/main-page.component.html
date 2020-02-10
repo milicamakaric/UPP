@@ -7,10 +7,20 @@
   <table>
     <tr><a class="navbar-brand" [routerLink]="['/registration']" *ngIf="!isLoggedIn">Registracija korisnika</a></tr><br>
     <tr><a class="navbar-brand" [routerLink]="['/login']" *ngIf="!isLoggedIn">Prijava</a></tr>
+    <tr><a class="navbar-brand" [routerLink]="['/casopisi']" *ngIf="isLoggedIn">Izaberite casopis</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/rad-casopisi']" *ngIf="isAutor">Novi rad</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/pdf-ispravka']" *ngIf="isAutor">Korigovanje rada</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/ispravka-rad']" *ngIf="isAutor">Ispravka rada</a></tr><br>
     <tr><a class="navbar-brand" [routerLink]="['/casopis']" *ngIf="isUrednik">Kreiranje casopisa</a></tr><br>
-    <tr><a class="navbar-brand" [routerLink]="['/recenzenti']" *ngIf="isAdmin">Potvrda recenzenata</a></tr><br>
     <tr><a class="navbar-brand" [routerLink]="['/ispravka']" *ngIf="isUrednik">Ispravka podataka casopisa</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/rad-pregled']" *ngIf="isUrednik">Pregled radova</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/vreme-recenziranja']" *ngIf="isUrednik">Izbor recenzenata</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/novi-recenzenti']" *ngIf="isUrednik">Izbor novih recenzenata</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/recenziranje']" *ngIf="isRecenzent || isUrednik">Recenziranje</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/analiza-recenzija']" *ngIf="isUrednik">Analiziranje recenzija</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/pregled-rada']" *ngIf="isUrednik">Pregled ispravljenog rada</a></tr><br>
     <tr><a class="navbar-brand" [routerLink]="['/casopis-admin']" *ngIf="isAdmin">Provera novog casopisa</a></tr><br>
+    <tr><a class="navbar-brand" [routerLink]="['/recenzenti']" *ngIf="isAdmin">Potvrda recenzenata</a></tr><br>
     <tr><a class="navbar-brand" (click)="logOut()" style="cursor: pointer;" *ngIf="isLoggedIn">Odjava</a></tr>
   </table>
 
