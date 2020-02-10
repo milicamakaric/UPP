@@ -886,6 +886,17 @@ public class RadController {
                 .body(new ByteArrayResource(rad.getPdf()));
     }
 
+    @GetMapping(path = "/downloadRad/{radId}")
+    public @ResponseBody ResponseEntity downloadFile(@PathVariable Integer radId) {
+
+        Rad rad = radService.findOneById(radId);
+
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("application/pdf"))
+                .header(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\""  + "rad.pdf\"")
+                .body(new ByteArrayResource(rad.getPdf()));
+    }
+
 
     private List<CasopisDTO> getCasopisiDTO(){
         List<Casopis> casopisi = casopisService.findAll();

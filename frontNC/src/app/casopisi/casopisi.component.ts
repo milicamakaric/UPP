@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KpService } from '../services/kp/kp.service';
+import { RadService } from '../services/rad/rad.service';
 
 @Component({
   selector: 'app-casopisi',
@@ -14,7 +15,7 @@ export class CasopisiComponent implements OnInit {
   private izabrani_rad_id;
   private dobijeni_nacini_placanja = false;
 
-  constructor(private kpService: KpService) {
+  constructor(private kpService: KpService, private radService: RadService) {
 
     kpService.getCasopisi().subscribe(
       res => {
@@ -45,6 +46,16 @@ export class CasopisiComponent implements OnInit {
   preuzmiRad(radId){
     // TODO
     console.log('preuzmi rad: ' + radId);
+
+    this.radService.downloadRad(radId).subscribe(
+      res => {
+        var blob = new Blob([res], {type: 'application/pdf'});
+        var url= window.URL.createObjectURL(blob);
+        window.open(url, "_blank");
+      }, err => {
+        alert("Error while download file");
+      }
+    );
   }
 
   nazad(){

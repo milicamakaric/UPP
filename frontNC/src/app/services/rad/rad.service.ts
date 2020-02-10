@@ -133,5 +133,12 @@ export class RadService {
     return this.http.get(this.zuul.path + "rad/downloadFile/".concat(procesId), httpOptions) as Observable<any>;
   }
 
+  downloadRad(radId) {
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+    };
+    return this.http.get(this.zuul.path + "rad/downloadRad/".concat(radId), httpOptions) as Observable<any>;
+  }
+
 
 }
