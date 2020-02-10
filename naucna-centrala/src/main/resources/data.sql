@@ -105,7 +105,6 @@ insert into casopis_recenzenti (casopis_id, recenzenti_id) values (3, 3);
 insert into casopis_urednici (casopis_id, urednici_id) values (1, 2);
 insert into casopis_urednici (casopis_id, urednici_id) values (1, 7);
 insert into casopis_urednici (casopis_id, urednici_id) values (1, 8);
-insert into casopis_urednici (casopis_id, urednici_id) values (1, 11);
 
 # insert into casopis_korisnici_platili (casopis_id, korisnici_platili_id) values (1, 9);
 

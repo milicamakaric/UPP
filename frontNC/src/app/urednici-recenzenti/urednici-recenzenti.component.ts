@@ -94,9 +94,9 @@ export class UredniciRecenzentiComponent implements OnInit {
         res => {
           console.log("casopisId");
           console.log(res);
-          // alert('Casopis uspesno sacuvan.')
-          // window.location.href="";
-          window.location.href="casopis-placanje/" + res;
+          alert('Casopis uspesno sacuvan.')
+          window.location.href="";
+          // window.location.href="casopis-placanje/" + res;
       
         },
         err => {
