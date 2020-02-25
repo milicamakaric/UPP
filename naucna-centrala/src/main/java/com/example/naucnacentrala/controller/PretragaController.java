@@ -573,11 +573,6 @@ public class PretragaController {
                 radESDTO.setOpenAccess(false);
             }
 
-            System.out.println("highlight");
-            System.out.println(node.get(i).path("highlight").path(highlight));
-            System.out.println("size:");
-            System.out.println(node.get(i).path("highlight").path(highlight).size());
-
             String highText = "";
             for(int j=0; j<node.get(i).path("highlight").path(highlight).size(); j++){
                 highText += node.get(i).path("highlight").path(highlight).get(j).asText() + "...";
@@ -628,12 +623,15 @@ public class PretragaController {
                 radESDTO.setOpenAccess(false);
             }
 
+
             String highText = node.get(i).path("highlight").toString();
+
             highText = highText.replace("\"","");
-            highText = highText.replace("{"," ");
-            highText = highText.replace("}"," ");
+            highText = highText.replace("{","...");
+            highText = highText.replace("}","...");
             highText = highText.replace("["," ");
             highText = highText.replace("]"," ");
+            highText = highText.replace("\\r\\n","...");
             radESDTO.setHighlight(highText);
 
             retVal.add(radESDTO);
