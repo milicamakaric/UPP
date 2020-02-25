@@ -126,7 +126,7 @@ export class RadComponent implements OnInit {
     }
     reader.readAsDataURL(this.fileToUpload);
     console.log("URL " + this.fileUrl);
-    console.log("file " + this.fileToUpload);
+    console.log(this.fileToUpload);
   }
 
   onSubmitRadForm(value, form){

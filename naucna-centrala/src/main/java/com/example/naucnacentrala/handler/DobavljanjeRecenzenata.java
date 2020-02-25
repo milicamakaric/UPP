@@ -41,11 +41,9 @@ public class DobavljanjeRecenzenata implements JavaDelegate {
         if(recenzentiNaucnaOblast.size()  < 2){
             System.out.println("postoji manje od 2 recenzenta za casopis: " + radService.findOneById(radId).getCasopis().getNaziv());
 //            delegateExecution.setVariableLocal("postoje_recenzentii ", false);
-            delegateExecution.setVariable("ima_recenzenata", false);
+            delegateExecution.setVariable("ima_recenzenata", true);
         }else{
             System.out.println("postoji vise od 2 recenzenta za casopis: " + radService.findOneById(radId).getCasopis().getNaziv());
-//            delegateExecution.setVariableLocal("recenzenti_lista", recenzentiNaucnaOblast);
-//            delegateExecution.setVariableLocal("postoje_recenzentii ", true);
             delegateExecution.setVariable("recenzenti_lista", recenzentiNaucnaOblast);
             delegateExecution.setVariable("ima_recenzenata", true);
         }

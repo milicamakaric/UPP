@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { PaypalServiceService } from '../services/paypal-service.service';
+import { PaypalServiceService } from '../services/paypal/paypal-service.service';
 
 
 @Component({

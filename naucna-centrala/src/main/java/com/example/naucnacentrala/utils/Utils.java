@@ -2,7 +2,6 @@ package com.example.naucnacentrala.utils;
 
 import com.example.naucnacentrala.dto.FormSubmissionDto;
 import com.example.naucnacentrala.security.TokenUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;

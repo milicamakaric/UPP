@@ -82,6 +82,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 					.antMatchers("/casopis/**").permitAll()
 					.antMatchers("/rad/**").permitAll()
 					.antMatchers("/KP/**").permitAll()
+					.antMatchers("/pretraga/**").permitAll()
 					// svaki zahtev mora biti autorizovan
 					.anyRequest().authenticated().and()
 				// presretni svaki zahtev filterom
@@ -97,13 +98,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 			// TokenAuthenticationFilter ce ignorisati sve ispod navedene putanje
 			web.ignoring().antMatchers(HttpMethod.POST, "/auth/**");
 			web.ignoring().antMatchers(HttpMethod.GET, "/auth/**");
-//			web.ignoring().antMatchers(HttpMethod.OPTIONS, "/auth/**");
-			// nije potrebna autentifikacija za obicne user metode
-//			web.ignoring().antMatchers(HttpMethod.POST, "/registration/**");
-//			web.ignoring().antMatchers(HttpMethod.GET, "/registration/**");
-//			web.ignoring().antMatchers(HttpMethod.PUT, "/registration/**");
-//			web.ignoring().antMatchers(HttpMethod.OPTIONS, "/registration/**");
+
 			web.ignoring().antMatchers(HttpMethod.GET, "/KP/**");
+
+			web.ignoring().antMatchers(HttpMethod.GET, "/pretraga/**");
+			web.ignoring().antMatchers(HttpMethod.POST, "/pretraga/**");
+
 			web.ignoring().antMatchers(HttpMethod.GET, "/", "/webjars/**", "/*.html", "/favicon.ico", "/**/*.html", "/**/*.css", "/**/*.js");
 		}
 		

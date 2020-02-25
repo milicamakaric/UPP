@@ -5,6 +5,7 @@ import com.example.naucnacentrala.model.*;
 import com.example.naucnacentrala.service.KorisnikService;
 import com.example.naucnacentrala.service.NaucnaOblastService;
 import com.example.naucnacentrala.service.RoleService;
+import com.example.naucnacentrala.utils.GoogleCoords;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
@@ -27,6 +28,9 @@ public class ProveraPodataka implements JavaDelegate {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private GoogleCoords googleCoords;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -84,6 +88,10 @@ public class ProveraPodataka implements JavaDelegate {
         }
 
         delegateExecution.setVariable("registration", registration);
+
+        Lokacija lokacija = googleCoords.getKoordinate(korisnik.getGrad());
+        korisnik.setLatitude(lokacija.getLatitude());
+        korisnik.setLongitude(lokacija.getLongitude());
 
         korisnik.setAktiviran(false);
         korisnik = korisnikService.save(korisnik);

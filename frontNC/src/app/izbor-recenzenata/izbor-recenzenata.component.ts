@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RadService } from '../services/rad/rad.service';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { SearchService } from '../services/search/search.service';
 
 @Component({
   selector: 'app-izbor-recenzenata',
@@ -17,16 +18,21 @@ export class IzborRecenzenataComponent implements OnInit {
   private error = false;
   private recenzentiForm: FormGroup;
   private select_box1: FormControl;
+  private recenzenti = [];
+  private noRecenzent = false;
 
-  constructor(private route: ActivatedRoute, private radService: RadService) {
+  private disabledAll = false;
+  private disabledNaucneOblasti = false;
+  private disabledMLT = false;
+  private disabledGeo = false;
+
+  constructor(private route: ActivatedRoute, private radService: RadService, private searchService: SearchService) {
 
     this.route.params.subscribe( params => {
       this.procesId = params.id_proces;
     });
 
-    let x = this.radService.getIzborRecenzenataTask();
-
-    x.subscribe(
+    this.radService.getIzborRecenzenataTask().subscribe(
       res => {
         console.log(res);
         this.formFieldsDto = res;
@@ -34,9 +40,12 @@ export class IzborRecenzenataComponent implements OnInit {
         this.procesId = res.processInstanceId;
         this.formFields.forEach( (field) =>{
           
-          if( field.type.name=='enum'){
-            this.enumValues = Object.keys(field.type.values);
-          }
+        if( field.type.name=='enum'){
+          this.enumValues = Object.keys(field.type.values);
+        }
+
+        this.allRecenzenti();
+
         });
       },
       err => {
@@ -60,6 +69,104 @@ export class IzborRecenzenataComponent implements OnInit {
       select_box1: this.select_box1
     });
     
+  }
+
+  allRecenzenti(){
+
+    this.noRecenzent = false;
+    this.error = false;
+
+    this.searchService.searchAll(this.procesId).subscribe(
+      res=>{
+        console.log(res);
+        this.recenzenti = res;
+
+        this.disabledAll = true;
+        this.disabledNaucneOblasti = false;
+        this.disabledMLT = false;
+        this.disabledGeo = false;
+
+      },
+      error=>{
+        console.log(error);
+      }
+    )
+  }
+
+  byNaucneOblasti(){
+
+    this.noRecenzent = false;
+    this.error = false;
+
+    this.searchService.searchByNaucneOblasti(this.procesId).subscribe(
+      res=>{
+        console.log(res);
+        this.recenzenti = res;
+
+        this.disabledAll = false;
+        this.disabledNaucneOblasti = true;
+        this.disabledMLT = false;
+        this.disabledGeo = false;
+
+        if(this.recenzenti.length == 0){
+          this.noRecenzent = true;
+        }
+      },
+      error=>{
+        console.log(error);
+      }
+    )
+  }
+
+  byMoreLikeThis(){
+
+    this.noRecenzent = false;
+    this.error = false;
+
+    this.searchService.searchByMoreLikeThis(this.procesId).subscribe(
+      res=>{
+        console.log(res);
+        this.recenzenti = res;
+
+        this.disabledAll = false;
+        this.disabledNaucneOblasti = false;
+        this.disabledMLT = true;
+        this.disabledGeo = false;
+        
+        if(this.recenzenti.length == 0){
+          this.noRecenzent = true;
+        }
+      },
+      error=>{
+        console.log(error);
+      }
+    )
+    
+  }
+
+  byGeoSpace(){
+
+    this.noRecenzent = false;
+    this.error = false;
+
+    this.searchService.searchByGeoSpacing(this.procesId).subscribe(
+      res=>{
+        console.log(res);
+        this.recenzenti = res;
+
+        this.disabledAll = false;
+        this.disabledNaucneOblasti = false;
+        this.disabledMLT = false;
+        this.disabledGeo = true;
+
+        if(this.recenzenti.length == 0){
+          this.noRecenzent = true;
+        }
+      },
+      error=>{
+        console.log(error);
+      }
+    );
   }
 
   onSubmitRecenzentiForm(value, form){

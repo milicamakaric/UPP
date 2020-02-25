@@ -8,14 +8,20 @@
     </div><br><br>
 
     <div class="container">
+        <div class="offset-md-1 mb-2">
+            <button [disabled]="disabledAll" class="btn btn-primary mr-1" (click)="allRecenzenti()">Svi recenzenti</button>
+            <button [disabled]="disabledNaucneOblasti" class="btn btn-primary mr-1" (click)="byNaucneOblasti()">Iz naucne oblasti</button>
+            <button [disabled]="disabledMLT" class="btn btn-primary mr-1" (click)="byMoreLikeThis()">More like this</button>
+            <button [disabled]="disabledGeo" class="btn btn-primary mr-1" (click)="byGeoSpace()">Dalji od 100km</button>
+        </div>
         <form [formGroup]="recenzentiForm" #f="ngForm">
 
             <div *ngFor="let field of formFields" class="form-group row">
                 <label for={{field.id}} class="col-sm-5 col-form-label">{{field.label}}</label>
                 <div class="col-sm-5">
                     <select name={{field.id}} *ngIf="field.type.name=='enum'" formControlName={{field.id}} class="form-control" multiple>
-                        <option *ngFor="let val of enumValues" value={{val}}>
-                          {{field.type.values[val]}}
+                        <option *ngFor="let val of recenzenti" value={{val.id}}>
+                          {{val.name}}
                         </option>
                     </select>
                     <span>
@@ -27,6 +33,12 @@
           <button [disabled]="recenzentiForm.invalid" type="submit" id="confirmBtn" class="btn btn-primary" (click)="onSubmitRecenzentiForm(f.value, f)">Potvrdi</button>
           <br><br>
         </form><br><br>
+    </div><br><br>
+</div>
+
+<div *ngIf="noRecenzent">
+    <div class="container">
+        <br><h4 >Trenutno nema recenzenata koji ispunjvaju uslove filtriranja.</h4>
     </div><br><br>
 </div>
 

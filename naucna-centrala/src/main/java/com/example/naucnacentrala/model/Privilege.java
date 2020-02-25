@@ -16,8 +16,8 @@ public class Privilege implements GrantedAuthority, Serializable {
     @Column(name = "name")
     private String name;
  
-    @ManyToMany(mappedBy = "privileges", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Collection<Role> roles;
+//    @ManyToMany(mappedBy = "privileges", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Collection<Role> roles;
     
 	public Integer getId() {
 		return id;
@@ -34,14 +34,14 @@ public class Privilege implements GrantedAuthority, Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Collection<Role> getRoles() {
-		return roles;
-	}
-
-	public void setRoles(Collection<Role> roles) {
-		this.roles = roles;
-	}
+//
+//	public Collection<Role> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(Collection<Role> roles) {
+//		this.roles = roles;
+//	}
 
 	@Override
 	public String getAuthority() {

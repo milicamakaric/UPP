@@ -2,9 +2,23 @@
   <h2>Naucna centrala</h2>
 </div>
 
+<nav class="navbar navbar-light bg-light">
+
+  <table>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/1']">Pretraga po nazivu časopisa</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/2']">Pretraga po naslovu rada</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/3']">Pretraga po autorima</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/4']">Pretraga po ključnim pojmovima</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/5']">Pretraga po sadržaju</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/search/6']">Pretraga po naučnim oblastima</a></tr>
+    <tr><a *ngIf="isLoggedIn" class="navbar-brand" [routerLink]="['/advancedSearch']">Kombinovana pretraga</a></tr>
+  </table><br>
+
+</nav>
+
 <nav class="navbar navbar-light bg-light"> 
   
-  <table>
+  <table><br>
     <tr><a class="navbar-brand" [routerLink]="['/registration']" *ngIf="!isLoggedIn">Registracija korisnika</a></tr><br>
     <tr><a class="navbar-brand" [routerLink]="['/login']" *ngIf="!isLoggedIn">Prijava</a></tr>
     <tr><a class="navbar-brand" [routerLink]="['/casopisi']" *ngIf="isLoggedIn">Izaberite casopis</a></tr><br>
@@ -24,4 +38,4 @@
     <tr><a class="navbar-brand" (click)="logOut()" style="cursor: pointer;" *ngIf="isLoggedIn">Odjava</a></tr>
   </table>
 
-  </nav>
+</nav>

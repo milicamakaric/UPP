@@ -14,8 +14,8 @@ public class Role implements Serializable {
 	@Column(name = "name")
     private String name;
     
-    @ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Collection<Korisnik> users;
+//    @ManyToMany(mappedBy = "roles", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Collection<Korisnik> users;
     
     @ManyToMany(fetch = FetchType.EAGER,  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
@@ -42,13 +42,13 @@ public class Role implements Serializable {
 		this.name = name;
 	}
 
-	public Collection<Korisnik> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Collection<Korisnik> users) {
-		this.users = users;
-	}
+//	public Collection<Korisnik> getUsers() {
+//		return users;
+//	}
+//
+//	public void setUsers(Collection<Korisnik> users) {
+//		this.users = users;
+//	}
 
 	public Collection<Privilege> getPrivileges() {
 		return privileges;

@@ -1,0 +1,94 @@
+<div *ngIf="prikaziRezultate && radovi.length != 0">
+    <div *ngFor="let val of radovi"  class="col-md-11 my-3 offset-md-1 mx-auto">
+        <div class="card">
+            <h5 class="card-header">{{val.naslov}}</h5>
+            <div class="card-body" >
+                <h5 class="card-title">Časopis:</h5><p class="card-text">{{val.naslovCasopisa}}</p>
+                <h5 class="card-title">Apstrakt:</h5><p class="card-text">{{val.apstrakt}}</p>
+                <h5 class="card-title">Autori:</h5><p class="card-text">{{val.autori}}</p>
+                <h5 class="card-title">Sažetak:</h5><p class="card-text" [innerHtml]="val.highlight"></p>
+                <button *ngIf="val.openAccess" (click)="preuzmiRad(val.id)" class="btn btn-primary offset-md-10">Preuzmi</button>
+                <button *ngIf="!val.openAccess" (click)="kupiRad(val.id)" class="btn btn-primary offset-md-10">Kupi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="prikaziRezultate && radovi.length == 0" class="col-md-11 my-3 offset-md-1 mx-auto">
+    <div class="card">
+        <h5 class="card-header">Trenutno nema radova koji ispunjavaju zadate parametre pretrage.</h5>
+    </div>
+</div>
+<button *ngIf="prikaziRezultate" class="btn btn-primary offset-md-1" (click)="back()">Nazad</button>
+
+<div class="bg-light col-md-6 offset-md-3 my-3 pb-3" *ngIf="!prikaziRezultate">
+    <div class="text-center py-3">
+        <h3>Pretraga radova:</h3>
+        <p class="font-italic">*Ukoliko ne želite da pretražujete po nekom polju samo ga ostavite praznim.</p>
+    </div>
+    <div class="col-md-6 offset-md-3">
+        <div class="form-group">
+            <label for="nazivCasopisa">Po nazivu časopisa:</label>
+            <input name="nazivCasopisa" [(ngModel)]="nazivCasopisa"  type="text" class="form-control">
+        </div>
+        <div class="form-group">
+            <input [(ngModel)]="nazivCasopisaOznacen" checked type="radio" id="nazivCasopisaOznacenAND" name="nazivCasopisaOznacen" value=true>
+            <label for="nazivCasopisaOznacenAND">AND</label><br>
+            <input [(ngModel)]="nazivCasopisaOznacen" type="radio" id="nazivCasopisaOznacenOR" name="nazivCasopisaOznacen" value=false>
+            <label for="nazivCasopisaOznacenOR">OR</label><br>
+        </div>
+        <div class="form-group">
+            <label for="naslovRada">Po naslovu rada:</label>
+            <input name="naslovRada" [(ngModel)]="naslovRada"  type="text" class="form-control" >
+        </div>
+        <div class="form-group">
+            <input [(ngModel)]="naslovRadaOznacen" checked type="radio" id="naslovRadaOznacenAND" name="naslovRadaOznacen" value=true>
+            <label for="naslovRadaOznacenAND">AND</label><br>
+            <input [(ngModel)]="naslovRadaOznacen" type="radio" id="naslovRadaOznacenOR" name="naslovRadaOznacen" value=false>
+            <label for="naslovRadaOznacenOR">OR</label><br>
+        </div>
+        <div  class="form-group">
+            <label for="autori">Po autorima:</label>
+            <input name="autori" [(ngModel)]="autori"  type="text" class="form-control" >
+        </div>
+        <div  class="form-group">
+                <input [(ngModel)]="autoriOznaceni" checked type="radio" id="autoriOznaceniAND" name="autoriOznaceni" value=true>
+                <label for="autoriOznaceniAND">AND</label><br>
+                <input [(ngModel)]="autoriOznaceni" type="radio" id="autoriOznaceniOR" name="autoriOznaceni" value=false>
+                <label for="autoriOznaceniOR">OR</label><br> 
+        </div> 
+        <div class="form-group">
+            <label for="kljucniPojmovi">Po ključnim pojmovima:</label>
+            <input name="kljucniPojmovi" [(ngModel)]="kljucniPojmovi"  type="text" class="form-control" >
+        </div>
+        <div class="form-group">
+            <input [(ngModel)]="kljucniPojmoviOznaceni" checked type="radio" id="kljucniPojmoviOznaceniAND" name="kljucniPojmoviOznaceni" value=true>
+            <label for="kljucniPojmoviOznaceniAND">AND</label><br>
+            <input [(ngModel)]="kljucniPojmoviOznaceni" type="radio" id="kljucniPojmoviOznaceniOR" name="kljucniPojmoviOznaceni" value=false>
+            <label for="kljucniPojmoviOznaceniOR">OR</label><br>   
+        </div>
+        <div class="form-group">
+            <label for="sadrzaj">Po sadržaju:</label>
+            <textarea name="sadrzaj" [(ngModel)]="sadrzaj"  type="text" class="form-control"></textarea>
+        </div>
+        <div class="form-group">
+            <input [(ngModel)]="sadrzajOznacen" checked type="radio" id="sadrzajOznacenAND" name="sadrzajOznacen" value=true>
+            <label for="sadrzajOznacenAND">AND</label><br>
+            <input [(ngModel)]="sadrzajOznacen" type="radio" id="sadrzajOznacenOR" name="sadrzajOznacen" value=false placeholder="aa">
+            <label for="sadrzajOznacenOR">OR</label><br>    
+        </div> 
+        <div *ngIf="false" class="form-group">
+            <label for="naucneOblasti">Po naučnim oblastima:</label>
+            <select name="naucneOblasti" multiple [(ngModel)]="naucneOblasti" class="form-control">
+                <option  value=0>Bez filtera za naucne oblasti!</option>
+                <option *ngFor="let val of naucneOblastiList" value={{val}}>
+                    {{val}}
+                </option>
+            </select>
+        </div>               
+        <div class="form-group">
+            <button class="btn btn-primary mr-1" (click)="search()">Pretraži</button>
+        </div>
+    </div>
+</div>
+
+<button *ngIf="!prikaziRezultate" class="btn btn-primary offset-md-1" (click)="nazad()">Povratak na početnu stranicu</button>

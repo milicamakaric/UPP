@@ -511,7 +511,8 @@ public class RadController {
         String processInstanceId = task.getProcessInstanceId();
         runtimeService.setVariable(processInstanceId, "izborRecenzenata", izborRecenzenata);
 
-        formService.submitTaskForm(taskId, map);
+//        formService.submitTaskForm(taskId, map);
+        taskService.complete(taskId);
 
         System.out.println("izasao iz rad/postIzborRecenenataData");
 
@@ -868,12 +869,8 @@ public class RadController {
 
         Integer radId = (Integer) runtimeService.getVariable(procesId, "radId");
         Rad rad = radService.findOneById(radId);
-        try {
-            rad.setPdf(file.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        rad = radService.save(rad);
+        System.out.println("file name: " + file.getName() + "original: " + file.getOriginalFilename());
+        rad = radService.savePdf(file, rad);
         return new ResponseEntity<>("ok", HttpStatus.OK);
     }
 
@@ -913,6 +910,49 @@ public class RadController {
         rad = radService.save(rad);
 
         return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/bug", produces = "application/json")
+    public @ResponseBody ResponseEntity bug() {
+        System.out.println("usao u metodu rad/bug");
+
+        Rad rad = radService.findOneById(10);
+
+        Korisnik recenzent = korisnikService.findOneById(3);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(5);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(15);
+        rad.getRecenzenti().add(recenzent);
+        radService.save(rad);
+
+
+        rad = radService.findOneById(14);
+
+        recenzent = korisnikService.findOneById(3);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(4);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(6);
+        rad.getRecenzenti().add(recenzent);
+        radService.save(rad);
+
+        rad = radService.findOneById(15);
+
+        recenzent = korisnikService.findOneById(5);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(6);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(10);
+        rad.getRecenzenti().add(recenzent);
+        recenzent = korisnikService.findOneById(15);
+        rad.getRecenzenti().add(recenzent);
+        radService.save(rad);
+
+        System.out.println("izasao iz rad/bug");
+
+        return new ResponseEntity(HttpStatus.OK);
+
     }
 
 

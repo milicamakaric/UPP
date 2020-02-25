@@ -45,6 +45,8 @@ import { NoviRecenzentiComponent } from './novi-recenzenti/novi-recenzenti.compo
 import { AnalizaRecenzijaComponent } from './analiza-recenzija/analiza-recenzija.component';
 import { IspravkaRadComponent } from './ispravka-rad/ispravka-rad.component';
 import { PregledRadaComponent } from './pregled-rada/pregled-rada.component';
+import { SearchComponent } from './search/search.component';
+import { AdvancedSearchComponent } from './advanced-search/advanced-search.component';
 
 const Routes = [
   { path: "", component: MainPageComponent },
@@ -82,7 +84,9 @@ const Routes = [
   { path: 'novi-recenzenti', component: NoviRecenzentiComponent },
   { path: 'analiza-recenzija', component: AnalizaRecenzijaComponent },
   { path: 'ispravka-rad', component: IspravkaRadComponent },
-  { path: 'pregled-rada', component: PregledRadaComponent }
+  { path: 'pregled-rada', component: PregledRadaComponent },
+  { path: 'search/:type', component: SearchComponent },
+  { path: 'advancedSearch', component: AdvancedSearchComponent }
 ]
 
 @NgModule({
@@ -123,7 +127,9 @@ const Routes = [
     NoviRecenzentiComponent,
     AnalizaRecenzijaComponent,
     IspravkaRadComponent,
-    PregledRadaComponent
+    PregledRadaComponent,
+    SearchComponent,
+    AdvancedSearchComponent
   ],
   imports: [
     BrowserModule,

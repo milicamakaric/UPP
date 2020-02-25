@@ -2,13 +2,13 @@ package com.example.naucnacentrala.handler;
 
 import com.example.naucnacentrala.dto.FormSubmissionDto;
 import com.example.naucnacentrala.model.Korisnik;
+import com.example.naucnacentrala.model.Lokacija;
 import com.example.naucnacentrala.model.Rad;
 import com.example.naucnacentrala.service.RadService;
-import org.camunda.bpm.engine.RuntimeService;
+import com.example.naucnacentrala.utils.GoogleCoords;
+import com.example.naucnacentrala.utils.Utils;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
-import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
-import org.camunda.bpm.engine.delegate.TaskListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +19,9 @@ public class CuvanjeKoautor implements JavaDelegate {
 
     @Autowired
     private RadService radService;
+
+    @Autowired
+    private GoogleCoords googleCoords;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
@@ -45,10 +48,17 @@ public class CuvanjeKoautor implements JavaDelegate {
             }
         }
 
+        System.out.println("grad: " + koautor.getGrad());
+
+        Lokacija lokacija = googleCoords.getKoordinate(koautor.getGrad());
+        koautor.setLatitude(lokacija.getLatitude());
+        koautor.setLongitude(lokacija.getLongitude());
+
         rad.getKoautori().add(koautor);
         rad = radService.save(rad);
 
         System.out.println("izasao iz CuvanjeKoautor");
 
     }
+
 }

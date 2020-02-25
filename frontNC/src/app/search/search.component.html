@@ -1,0 +1,83 @@
+<div *ngIf="prikaziRezultate && radovi.length != 0">
+    <div *ngFor="let val of radovi"  class="col-md-11 my-3 offset-md-1 mx-auto">
+        <div class="card">
+            <h5 class="card-header">{{val.naslov}}</h5>
+            <div class="card-body" >
+                <h5 class="card-title">Časopis:</h5><p class="card-text">{{val.naslovCasopisa}}</p>
+                <h5 class="card-title">Apstrakt:</h5><p class="card-text">{{val.apstrakt}}</p>
+                <h5 class="card-title">Autori:</h5><p class="card-text">{{val.autori}}</p>
+                <h5 class="card-title">Sažetak:</h5><p class="card-text" [innerHtml]="val.highlight"></p>
+                <button *ngIf="val.openAccess" (click)="preuzmiRad(val.id)" class="btn btn-primary offset-md-10">Preuzmi</button>
+                <button *ngIf="!val.openAccess" (click)="kupiRad(val.id)" class="btn btn-primary offset-md-10">Kupi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="prikaziRezultate && radovi.length == 0" class="col-md-11 my-3 offset-md-1 mx-auto">
+    <div class="card">
+        <h5 class="card-header">Trenutno nema radova koji ispunjavaju zadate parametre pretrage.</h5>
+    </div>
+</div>
+<button *ngIf="prikaziRezultate" class="btn btn-primary offset-md-1" (click)="back()">Nazad</button>
+
+<div class="bg-light col-md-6 offset-md-3 my-3 pb-3" *ngIf="!prikaziRezultate && tipPretrage!=0">
+        <div class="text-center py-3">
+            <h3>Pretraga radova:</h3>
+        </div>
+        <div class="col-md-8 offset-md-3">
+            <div *ngIf="tipPretrage == 1" class="form-group">
+                <label for="nazivCasopisa">Po nazivu časopisa:</label>
+                <input name="nazivCasopisa" [(ngModel)]="nazivCasopisa"  type="text" class="form-control">
+            </div>
+            <div *ngIf="tipPretrage == 1" class="form-group">
+                <label for="checkbox">Pretražuj kao frazu?</label>
+                <input type="checkbox" name="checkbox" [(ngModel)]="frazaOznacena" class="form-control" style="width: 1.85rem; height: 1.85rem;">
+            </div>
+            <div *ngIf="tipPretrage == 2" class="form-group">
+                <label for="naslovRada">Po naslovu rada:</label>
+                <input name="naslovRada" [(ngModel)]="naslovRada"  type="text" class="form-control" >
+            </div>
+            <div *ngIf="tipPretrage == 2" class="form-group">
+                <label for="exampleFormControlInput1">Pretražuj kao frazu?</label>
+                <input type="checkbox" class="form-control" name="checkbox" [(ngModel)]="frazaOznacena" style="width: 1.85rem; height: 1.85rem;" >
+            </div>
+            <div *ngIf="tipPretrage == 3" class="form-group">
+                <label for="autori">Po autorima:</label>
+                <input name="autori" [(ngModel)]="autori"  type="text" class="form-control" >
+            </div>
+            <div *ngIf="tipPretrage == 3" class="form-group">
+                <label for="exampleFormControlInput1">Pretražuj kao frazu?</label>
+                <input type="checkbox" class="form-control" name="checkbox" [(ngModel)]="frazaOznacena" style="width: 1.85rem; height: 1.85rem;" >           
+            </div>
+            <div *ngIf="tipPretrage == 4" class="form-group">
+                <label for="kljucniPojmovi">Po ključnim pojmovima:</label>
+                <input name="kljucniPojmovi" [(ngModel)]="kljucniPojmovi"  type="text" class="form-control">
+            </div>
+            <div *ngIf="tipPretrage == 4" class="form-group">
+                <label for="exampleFormControlInput1">Pretražuj kao frazu?</label>
+                <input type="checkbox" class="form-control" name="checkbox" [(ngModel)]="frazaOznacena" style="width: 1.85rem; height: 1.85rem;" >           
+            </div> 
+            <div *ngIf="tipPretrage == 5" class="form-group">
+                <label for="sadrzaj">Po sadržaju:</label>
+                <textarea name="sadrzaj" [(ngModel)]="sadrzaj"  type="text" class="form-control" ></textarea>
+            </div>
+            <div *ngIf="tipPretrage == 5" class="form-group">
+                <label for="exampleFormControlInput1">Pretražuj kao frazu?</label>
+                <input type="checkbox" class="form-control" name="checkbox" [(ngModel)]="frazaOznacena" style="width: 1.85rem; height: 1.85rem;" value="Pretrazuj kao frazu?">           
+            </div> 
+            <div *ngIf="tipPretrage == 6" class="form-group">
+                <label for="naucneOblasti">Po naučnim oblastima:</label>
+                <select name="naucneOblasti" multiple [(ngModel)]="naucneOblasti" class="form-control">
+                    <option *ngFor="let val of naucneOblastiList" value={{val}}>
+                        {{val}}
+                    </option>
+                </select>
+            </div>
+                           
+        <div class="form-group">
+                <button class="btn btn-primary mr-1" (click)="search()">Pretraži</button>
+        </div>
+    </div>
+</div>
+
+<button *ngIf="!prikaziRezultate" class="btn btn-primary offset-md-1" (click)="nazad()">Povratak na početnu stranicu</button>

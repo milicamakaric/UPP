@@ -28,6 +28,12 @@ public class Korisnik implements UserDetails, Serializable {
     private String drzava;
 
     @Column
+    private Double latitude;
+
+    @Column
+    private Double longitude;
+
+    @Column
     private String titula;
 
     @Column
@@ -107,6 +113,14 @@ public class Korisnik implements UserDetails, Serializable {
     public void setDrzava(String drzava) {
         this.drzava = drzava;
     }
+
+    public Double getLatitude() { return latitude; }
+
+    public void setLatitude(Double latitude) { this.latitude = latitude; }
+
+    public Double getLongitude() { return longitude; }
+
+    public void setLongitude(Double longitude) { this.longitude = longitude; }
 
     public String getTitula() {
         return titula;

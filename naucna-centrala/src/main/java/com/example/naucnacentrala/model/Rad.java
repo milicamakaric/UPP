@@ -29,6 +29,9 @@ public class Rad {
     private String pdfLokacija;
 
     @Column
+    private String pdfName;
+
+    @Column
     private boolean prihvacen;
 
     @Column(name = "pdf")
@@ -42,7 +45,7 @@ public class Rad {
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Korisnik> koautori = new ArrayList<>();
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Korisnik> recenzenti = new ArrayList<>();
 
     @Convert(converter = StringListConverter.class)
@@ -109,6 +112,10 @@ public class Rad {
     public void setPdfLokacija(String pdfLokacija) {
         this.pdfLokacija = pdfLokacija;
     }
+
+    public String getPdfName() { return pdfName; }
+
+    public void setPdfName(String pdfName) { this.pdfName = pdfName; }
 
     public boolean isPrihvacen() {
         return prihvacen;
