@@ -7,12 +7,19 @@ public class KombinovanaPretragaDTO {
     private String autori;
     private String kljucniPojmovi;
     private String tekst;
+
     private String naucnaOblast;
     private boolean nazivCasopisaOznacen;
     private boolean naslovRadaOznacen;
     private boolean autoriOznaceni;
     private boolean kljucniPojmoviOznaceni;
     private boolean sadrzajOznacen;
+
+    private boolean frazaNazivCasopisa;
+    private boolean frazaNaslovRada;
+    private boolean frazaAutori;
+    private boolean frazaKljucniPojmovi;
+    private boolean frazaSadrzaj;
 
     public KombinovanaPretragaDTO() {
     }
@@ -103,5 +110,45 @@ public class KombinovanaPretragaDTO {
 
     public void setSadrzajOznacen(boolean sadrzajOznacen) {
         this.sadrzajOznacen = sadrzajOznacen;
+    }
+
+    public boolean isFrazaNazivCasopisa() {
+        return frazaNazivCasopisa;
+    }
+
+    public void setFrazaNazivCasopisa(boolean frazaNazivCasopisa) {
+        this.frazaNazivCasopisa = frazaNazivCasopisa;
+    }
+
+    public boolean isFrazaNaslovRada() {
+        return frazaNaslovRada;
+    }
+
+    public void setFrazaNaslovRada(boolean frazaNaslovRada) {
+        this.frazaNaslovRada = frazaNaslovRada;
+    }
+
+    public boolean isFrazaAutori() {
+        return frazaAutori;
+    }
+
+    public void setFrazaAutori(boolean frazaAutori) {
+        this.frazaAutori = frazaAutori;
+    }
+
+    public boolean isFrazaKljucniPojmovi() {
+        return frazaKljucniPojmovi;
+    }
+
+    public void setFrazaKljucniPojmovi(boolean frazaKljucniPojmovi) {
+        this.frazaKljucniPojmovi = frazaKljucniPojmovi;
+    }
+
+    public boolean isFrazaSadrzaj() {
+        return frazaSadrzaj;
+    }
+
+    public void setFrazaSadrzaj(boolean frazaSadrzaj) {
+        this.frazaSadrzaj = frazaSadrzaj;
     }
 }

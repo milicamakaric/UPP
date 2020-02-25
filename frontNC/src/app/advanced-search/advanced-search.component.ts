@@ -21,6 +21,12 @@ export class AdvancedSearchComponent implements OnInit {
   private kljucniPojmoviOznaceni = true;
   private sadrzajOznacen = true;
 
+  private frazaNazivCasopisa = false;
+  private frazaNaslovRada = false;
+  private frazaAutori = false;
+  private frazaKljucniPojmovi = false;
+  private frazaSadrzaj = false;
+
   private nazivCasopisa = "";
   private naslovRada = "";
   private autori = "";
@@ -109,6 +115,11 @@ export class AdvancedSearchComponent implements OnInit {
       tekst: this.sadrzaj,
       sadrzajOznacen: this.sadrzajOznacen,
       naucnaOblast: temp,
+      frazaNazivCasopisa: this.frazaNazivCasopisa,
+      frazaNaslovRada: this.frazaNaslovRada,
+      frazaAutori: this.frazaAutori,
+      frazaKljucniPojmovi: this.frazaKljucniPojmovi,
+      frazaSadrzaj: this.frazaSadrzaj
     }
 
     console.log(o);

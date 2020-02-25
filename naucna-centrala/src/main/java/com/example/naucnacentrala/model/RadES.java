@@ -38,7 +38,7 @@ public class RadES {
     @Field(type = FieldType.Text, searchAnalyzer = "serbian",analyzer = "serbian")
     private String tekst;
 
-    @Field(type = FieldType.Text, searchAnalyzer = "serbian",analyzer = "serbian", store = true)
+    @Field(type = FieldType.Text, store = true)
     private String autori;
 
     public RadES() {

@@ -182,51 +182,77 @@ public class PretragaController {
 
         String must = "\"must\" : [\n" ;
         String should = "\"should\" : [\n";
+        String fraza = "";
 
         boolean shouldBe = false;
         boolean mustBe = false;
 
+        if(dto.isFrazaNazivCasopisa()){
+            fraza = "match_phrase";
+        }else{
+            fraza = "match";
+        }
         if(dto.isNazivCasopisaOznacen() && !dto.getNaslovCasopisa().equals("")){
-            must += "{ \"match\" : { \"naslovCasopisa\" : \""+dto.getNaslovCasopisa()+"\" } },";
+            must += "{ \"" + fraza + "\" : { \"naslovCasopisa\" : \""+dto.getNaslovCasopisa()+"\" } },";
             mustBe = true;
         }else if(!dto.isNazivCasopisaOznacen() && !dto.getNaslovCasopisa().equals("")){
-            should += "{ \"match\" : { \"naslovCasopisa\" : \""+dto.getNaslovCasopisa()+"\" } },";
+            should += "{ \"" + fraza + "\" : { \"naslovCasopisa\" : \""+dto.getNaslovCasopisa()+"\" } },";
             shouldBe = true;
         }
 
+        if(dto.isFrazaNaslovRada()){
+            fraza = "match_phrase";
+        }else{
+            fraza = "match";
+        }
         if(dto.isNaslovRadaOznacen() && !dto.getNaslov().equals("")){
-            must += "{ \"match\" : { \"naslov\" : \""+dto.getNaslov()+"\" } },";
+            must += "{ \"" + fraza + "\" : { \"naslov\" : \""+dto.getNaslov()+"\" } },";
             mustBe = true;
 
         }else if(!dto.isNaslovRadaOznacen() && !dto.getNaslov().equals("")){
-            should += "{ \"match\" : { \"naslov\" : \""+dto.getNaslov()+"\" } },";
+            should += "{ \"" + fraza + "\" : { \"naslov\" : \""+dto.getNaslov()+"\" } },";
             shouldBe = true;
         }
 
+        if(dto.isFrazaKljucniPojmovi()){
+            fraza = "match_phrase";
+        }else{
+            fraza = "match";
+        }
         if(dto.isKljucniPojmoviOznaceni() && !dto.getKljucniPojmovi().equals("")){
-            must += "{ \"match\" : { \"kljucniPojmovi\" : \""+dto.getKljucniPojmovi()+"\" } },";
+            must += "{ \"" + fraza + "\" : { \"kljucniPojmovi\" : \""+dto.getKljucniPojmovi()+"\" } },";
             mustBe = true;
 
         }else if(!dto.isKljucniPojmoviOznaceni() && !dto.getKljucniPojmovi().equals("")){
-            should += "{ \"match\" : { \"kljucniPojmovi\" : \""+dto.getKljucniPojmovi()+"\" } },";
+            should += "{ \"" + fraza + "\" : { \"kljucniPojmovi\" : \""+dto.getKljucniPojmovi()+"\" } },";
             shouldBe = true;
         }
 
+        if(dto.isFrazaAutori()){
+            fraza = "match_phrase";
+        }else{
+            fraza = "match";
+        }
         if(dto.isAutoriOznaceni() && !dto.getAutori().equals("")){
-            must += "{ \"match\" : { \"autori\" : \""+dto.getAutori()+"\" } },";
+            must += "{ \"" + fraza + "\" : { \"autori\" : \""+dto.getAutori()+"\" } },";
             mustBe = true;
 
         }else if(!dto.isAutoriOznaceni() && !dto.getAutori().equals("")){
-            should += "{ \"match\" : { \"autori\" : \""+dto.getAutori()+"\" } },";
+            should += "{ \"" + fraza + "\" : { \"autori\" : \""+dto.getAutori()+"\" } },";
             shouldBe = true;
         }
 
+        if(dto.isFrazaSadrzaj()){
+            fraza = "match_phrase";
+        }else{
+            fraza = "match";
+        }
         if(dto.isSadrzajOznacen() && !dto.getTekst().equals("")){
-            must += "{ \"match\" : { \"tekst\" : \""+dto.getTekst()+"\" } },";
+            must += "{ \"" + fraza + "\" : { \"tekst\" : \""+dto.getTekst()+"\" } },";
             mustBe = true;
 
         }else if(!dto.isSadrzajOznacen() && !dto.getTekst().equals("")){
-            should += "{ \"match\" : { \"tekst\" : \""+dto.getTekst()+"\" } },";
+            should += "{ \"" + fraza + "\" : { \"tekst\" : \""+dto.getTekst()+"\" } },";
             shouldBe = true;
         }
         must = must.substring(0,  must.length() - 1);
